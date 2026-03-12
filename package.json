@@ -1,0 +1,22 @@
+{
+  "name": "coursedog_assignment",
+  "version": "1.0.0",
+  "description": "Assignment for CourseDog",
+  "main": "index.js",
+  "scripts": {
+    "cypress:all": "npx cypress run --browser chrome --headed",
+    "cypress:all-headless": "npx cypress run --browser chrome --headless",
+    "cypress:cart-tests": "npx cypress run --browser chrome --headed --spec 'cypress/e2e/CartTest.cy.js'",
+    "cypress:upload-tests": "npx cypress run --browser chrome --headed --spec 'cypress/e2e/FileUploadTest.cy.js'",
+    "cypress:login-tests": "npx cypress run --browser chrome --headed --spec 'cypress/e2e/LoginTest.cy.js'",
+    "cypress:order-tests": "npx cypress run --browser chrome --headed --spec 'cypress/e2e/OrderTest.cy.js'"
+  },
+  "keywords": [],
+  "author": "Boris Ivanov",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "cypress": "^15.11.0",
+    "cypress-mochawesome-reporter": "4.0.2"
+  }
+}
