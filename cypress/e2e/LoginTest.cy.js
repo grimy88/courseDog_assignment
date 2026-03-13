@@ -37,7 +37,15 @@ describe('Login Tests', () => {
     loginPage.pageElementLocators.errorMesage().should('contain.text', errorMessage);
   });
 
-  it('Validate error message for empty fields', () => {
+  it('Validate error message for empty email field', () => {
+    loginPage.enterPassword(loginData.validPassword);
+    loginPage.clickSubmitButton();
+    loginPage.pageElementLocators.errorMesage().should('be.visible');
+    loginPage.pageElementLocators.errorMesage().should('contain.text', errorMessage);
+  });
+
+   it('Validate error message for empty password field', () => {
+    loginPage.enterEmail(loginData.validEmail);
     loginPage.clickSubmitButton();
     loginPage.pageElementLocators.errorMesage().should('be.visible');
     loginPage.pageElementLocators.errorMesage().should('contain.text', errorMessage);

@@ -3,8 +3,9 @@ import { fileUploadPage } from "../pages/fileUploadPage";
 describe('File upload tests', () => {
 
   const fileNameLocal = 'ceshire.jpg';
+  const fileNameLocal2 = 'test_document.txt';
   const pathToFile = 'cypress/fixtures/ceshire.jpg';
-  const uploadMessage = 'You have successfully uploaded "ceshire.jpg"';
+  const pathToFile2 = 'cypress/fixtures/test_document.txt';
 
   beforeEach(() => {
     cy.visit('/file-upload')
@@ -19,7 +20,16 @@ describe('File upload tests', () => {
     fileUploadPage.pageElementLocators.uploadButton().selectFile(pathToFile);
     fileUploadPage.clickSubmitButton();
     fileUploadPage.pageElementLocators.message().should('be.visible');
-    fileUploadPage.pageElementLocators.message().should('have.text', uploadMessage);
+    fileUploadPage.pageElementLocators.message().should('contain.text', fileNameLocal);
+  });
+
+  it('Validate multiple files can be uploaded', () => {
+    fileUploadPage.pageElementLocators.uploadButton().selectFile(pathToFile);
+    fileUploadPage.pageElementLocators.uploadButton().selectFile(pathToFile2);
+    fileUploadPage.clickSubmitButton();
+    fileUploadPage.pageElementLocators.message().should('be.visible');
+    fileUploadPage.pageElementLocators.message().should('contain.text', fileNameLocal2);
+    fileUploadPage.pageElementLocators.message().should('not.contain.text', fileNameLocal);
   });
 
 })

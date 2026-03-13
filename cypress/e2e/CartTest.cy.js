@@ -55,6 +55,16 @@ describe('Cart tests', () => {
     cartPage.pageElementLocators.totalPrice().should('contain.text', totalPrice.toFixed(2));
   });
 
+  it('Verify alert message is displayed when adding same product multiple times', () => {
+    let alertMessage = 'This item is already added to the cart';
+    cartPage.pageElementLocators.addToCartButton().first().click();
+    cartPage.pageElementLocators.itemQuantityField().should('have.value', 1);
+    cy.on('window:alert', (text) => {
+      expect(text).to.contains(alertMessage);
+    });
+    cartPage.pageElementLocators.addToCartButton().first().click();
+  });
+
   it('Verify that clicking on remove item from cart product is removed', () => {
     // add product to cart 
     cartPage.pageElementLocators.addToCartButton().first().click();
@@ -64,6 +74,35 @@ describe('Cart tests', () => {
 
     // validate total price is reset to zero and no items are present in cart
     cartPage.pageElementLocators.totalPrice().should('have.text', zeroTotalPrice);
+    cartPage.pageElementLocators.cartItemRow().should('have.length', 1);
+  });
+
+  it('Verify quantity for a product cannot be 0 or negative', () => {
+    cartPage.pageElementLocators.addToCartButton().first().click();
+
+    // set quantity to 0
+    cartPage.pageElementLocators.itemQuantityField().clear().type(0);
+    // after inserting the value we have to click outside the input field so that validation
+    // will check the input value for quantity
+    cartPage.pageElementLocators.cartItemName().click();
+    cartPage.pageElementLocators.itemQuantityField().should('have.value', 1);
+
+    // set quantity to a negative number
+    cartPage.pageElementLocators.itemQuantityField().clear().type(-1);
+    cartPage.pageElementLocators.cartItemName().click();
+    cartPage.pageElementLocators.itemQuantityField().should('have.value', 1);
+  });
+
+  it('Verify cart can be emptied by removing multiple items', () => {
+    cartPage.pageElementLocators.addToCartButton().first().click();
+    cartPage.pageElementLocators.addToCartButton().eq(1).click();
+    cartPage.pageElementLocators.addToCartButton().eq(2).click();
+    cartPage.pageElementLocators.addToCartButton().eq(3).click();
+
+    // remove all items added into cart
+    cartPage.pageElementLocators.removeItemButton().each(element => {
+      cy.wrap(element).click();
+    });
     cartPage.pageElementLocators.cartItemRow().should('have.length', 1);
   });
 
