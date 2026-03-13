@@ -1,0 +1,66 @@
+---
+description: Cypress test and Page Object conventions (architecture, assertions, locators, reliability, test data)
+globs: cypress/e2e/**/*.js, cypress/pages/**/*.js, cypress/support/**/*.js
+alwaysApply: false
+---
+
+# Cypress Test & Page Object Rules
+
+## Architecture
+- **Use a Page Object Model** for UI interactions.
+- **Encapsulate selectors and page-specific actions** inside files in `cypress/pages`.
+- **Keep assertions primarily in spec files**, except for simple page readiness checks where appropriate.
+- **Reuse shared logic** through `cypress/support` when it clearly improves maintainability.
+- **Write test titles that describe behavior clearly**.
+- **Prefer simple, maintainable structure** over unnecessary abstraction.
+
+## Project Structure
+- **Place test specs** in `cypress/e2e`.
+- **Place page objects, page actions, and page-specific selectors** in `cypress/pages`.
+- **Place shared commands and helpers** in `cypress/support`.
+- **Place reusable static data and upload files** in `cypress/fixtures`.
+- **Follow the existing spec naming convention**: `<FeatureName>Test.cy.js`.
+- **Do not rename or reorganize** the existing project structure unless explicitly requested.
+
+## Assertions
+- **Add assertions after meaningful user actions** and page transitions.
+- **Assert user-visible behavior and outcomes**, not implementation details.
+- **Use tolerant assertions** when UI text may vary slightly.
+- **Prefer `should()` and `contains()`** over brittle exact-match assertions when appropriate.
+
+## Parametrization
+- **Avoid copy-paste tests**.
+- **Extract repeated data** into fixtures, constants, or helper functions when it improves clarity.
+- **Keep parametrization readable** and easy to follow.
+- **Do not over-abstract** small or one-off scenarios.
+
+## Locators
+- **Prefer stable, maintainable selectors**.
+- **Use the least fragile locator available**.
+- **Avoid selectors tied to styling, layout, or deeply nested structure**.
+- **Do not duplicate reusable selectors in spec files** when they belong in page objects.
+
+## Reliability
+- **Never use arbitrary fixed waits** unless there is a real technical reason and it is clearly justified.
+- **Rely on Cypress retry behavior** and assertion-based synchronization.
+- **Prefer waiting on visible state, URL changes, network outcomes, or UI conditions** rather than time.
+- **Keep tests independent** where practical and avoid hidden dependencies between specs.
+- **Keep setup minimal and explicit**.
+
+## Test Data
+- **Do not hardcode credentials, secrets, or environment-specific values**.
+- **Use environment variables or centralized configuration** for environment-dependent data.
+- **Prefer deterministic test data** for stable and repeatable execution.
+- **Store reusable static data** in `cypress/fixtures` when appropriate.
+
+## Change Discipline
+- **Make minimal, targeted changes**.
+- **Reuse existing page objects and support utilities** before creating new ones.
+- **Do not introduce new frameworks, TypeScript, or major structural refactors** unless explicitly requested.
+- **Do not modify `package.json` scripts or `cypress.config.js`** unless the task specifically requires it.
+
+## Output Expectations
+- **Summarize** what was changed.
+- **List the files affected**.
+- **State assumptions** and any trade-offs made.
+- **Call out anything that should be validated** by running the Cypress tests.

@@ -1,0 +1,58 @@
+---
+description: Workflow before writing code, minimal changes, tests, dependencies, and new files
+alwaysApply: true
+---
+
+# Workflow & Code Standards
+
+## Before Writing or Modifying Code
+- **Restate the goal** in one sentence.
+- **Review the existing project structure first** before proposing changes.
+- **List assumptions** being made based on the current repository.
+- **Ask for confirmation** only if a requirement is genuinely ambiguous and blocks a safe implementation.
+- **Do not make speculative changes** outside the requested scope.
+
+## When Proposing Code
+- **Modify the smallest amount possible** to meet the goal.
+- **Prefer extending existing files** over creating new abstractions unnecessarily.
+- **Explain why each change** is needed.
+- **Avoid refactoring** unrelated code.
+- **Preserve the existing Cypress project structure and conventions** unless explicitly asked to change them.
+
+## When Proposing Test Changes
+- **Identify** the happy path and relevant edge cases.
+- **Explain** what behavior is being validated.
+- **Consider** reliability and flakiness risks before suggesting implementation details.
+- **Prefer assertion-based synchronization** over timing-based logic.
+- **Do not introduce arbitrary waits** unless there is a justified technical reason.
+
+## Before Introducing a New Utility or Abstraction
+- **Check whether the same need is already covered** in `cypress/pages`, `cypress/support`, or `cypress/fixtures`.
+- **Prefer reuse** over duplication.
+- **Only introduce a new abstraction** if it clearly improves maintainability, readability, or reuse.
+
+## Before Introducing a Library or Framework Change
+- **Ask for approval** before adding a dependency.
+- **Explain** the benefit and trade-offs.
+- **Do not introduce** Playwright, TypeScript, Jest, Selenium, or other framework changes unless explicitly requested.
+
+## When Creating New Files
+- **Place files in the correct existing location**:
+  - `cypress/e2e` for specs
+  - `cypress/pages` for page objects and page-specific actions/selectors
+  - `cypress/support` for shared commands and helpers
+  - `cypress/fixtures` for reusable static data
+- **Use the existing naming convention** for specs: `<FeatureName>Test.cy.js`.
+- **Create new files only when necessary**.
+- **Suggest documentation updates** if the change affects setup, usage, scripts, or project structure.
+
+## Config and Script Safety
+- **Do not modify** `package.json` scripts unless required by the task.
+- **Do not modify** `cypress.config.js` unless required by the task.
+- **If config changes are necessary**, keep them minimal and explain why they are needed.
+
+## Output Expectations
+- **Summarize** what was changed.
+- **List the files affected**.
+- **State assumptions** and any trade-offs made.
+- **Call out anything that should be validated** by running the Cypress tests.
